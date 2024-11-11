@@ -1,12 +1,21 @@
 //rafce
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../components/Header'
 import View from '../components/View'
 import Profile from '../components/Profile'
+import { tokenAuthContext } from '../contexts/AuthContextAPI'
 
 const Dashboard = () => {
+  const {isAuthorised,setIsAthorised} = useContext(tokenAuthContext)
   const [username,setUsername] = useState("")
+  console.log(isAuthorised);
+  
   useEffect(()=>{
+    if(sessionStorage.getItem("token")){
+      setIsAthorised(true)
+    }else{
+      setIsAthorised(false)
+    }
     if(sessionStorage.getItem("user")){
       setUsername(JSON.parse(sessionStorage.getItem("user")).username.split(" ")[0])
     }else{
